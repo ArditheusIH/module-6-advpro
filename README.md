@@ -19,4 +19,23 @@ Sebelumnya, fungsi hanya berhenti di logging request tanpa respons, sedangkan ve
 
 </details>
 
+<details>
+<summary>Commit 3</summary>
 
+![Commit 3 screen capture](commit3.png)
+
+
+
+**Penjelasan:**
+1. **Validasi Path:** Mengecek apakah request line mengandung path `/bad`
+2. **Penentuan Response:** 
+   - Jika path `/bad`, menggunakan status `404 NOT FOUND` dan file `error.html`
+   - Jika path lain, menggunakan status `200 OK` dan file `hello.html`
+3. **Buat file `error.html`** dengan konten:
+
+Perubahan utama dari kode sebelumnya:
+- Menambahkan logika validasi path request
+- Mendukung multiple response status (200 OK dan 404 NOT FOUND)
+- Memisahkan konten halaman ke file terpisah (`hello.html` dan `error.html`)
+
+</details>
