@@ -53,3 +53,11 @@ Penambahan Route /sleep dengan Simulasi Delay
 Efeknya memperkenalkan endpoint /sleep yang membuat thread tidur selama 10 detik sebelum merespons. Ini mensimulasikan blocking behavior pada server, menguji kemampuan server menangani permintaan yang lama.
 
 </details>
+
+<details>
+<summary>Commit 5</summary>
+
+   Kode Rust yang diberikan meningkatkan server HTTP dasar untuk menangani beberapa koneksi secara bersamaan menggunakan **thread pool**, meningkatkan performa dan mencegah pemblokiran selama permintaan yang memakan waktu lama. Struktur `ThreadPool` mengelola sejumlah tetap *worker thread* (direpresentasikan oleh `Worker`) yang mendengarkan tugas melalui saluran komunikasi (`mpsc`). Ketika koneksi TCP diterima, server mengirimkan penanganan koneksi tersebut ke thread yang tersedia di pool dengan mengirim *closure* (logika `handle_connection`) sebagai tugas. Thread pool memastikan tugas seperti menyajikan file statis (contoh: `hello.html`) atau simulasi penundaan (endpoint `/sleep`) diproses secara paralel. Dengan memanfaatkan `Arc<Mutex<...>>` untuk distribusi tugas yang *thread-safe*, server dapat melayani banyak permintaan tanpa memblokir thread utama, sehingga respons untuk rute sederhana tetap cepat bahkan saat permintaan lambat (seperti `/sleep`) sedang diproses. Pendekatan ini menyeimbangkan penggunaan sumber daya dan konkurensi, membuat server lebih skalabel untuk beban kerja nyata.
+
+
+</details>
