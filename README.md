@@ -25,17 +25,31 @@ Sebelumnya, fungsi hanya berhenti di logging request tanpa respons, sedangkan ve
 ![Commit 3 screen capture](commit3.png)
 
 
-
-**Penjelasan:**
 1. **Validasi Path:** Mengecek apakah request line mengandung path `/bad`
 2. **Penentuan Response:** 
-   - Jika path `/bad`, menggunakan status `404 NOT FOUND` dan file `error.html`
+   - Jika path `/bad`, menggunakan status `404 NOT FOUND` dan file `bad.html`
    - Jika path lain, menggunakan status `200 OK` dan file `hello.html`
-3. **Buat file `error.html`** dengan konten:
+3. **Buat file `bad.html`** dengan konten:
 
 Perubahan utama dari kode sebelumnya:
 - Menambahkan logika validasi path request
 - Mendukung multiple response status (200 OK dan 404 NOT FOUND)
-- Memisahkan konten halaman ke file terpisah (`hello.html` dan `error.html`)
+- Memisahkan konten halaman ke file terpisah (`hello.html` dan `bad.html`)
+
+</details>
+
+<details>
+<summary>Commit 4</summary>
+
+Penambahan Route /sleep dengan Simulasi Delay
+
+```
+"GET /sleep HTTP/1.1" => { 
+    thread::sleep(Duration::from_secs(10)); 
+    ("HTTP/1.1 200 OK", "hello.html") 
+}
+```
+
+Efeknya memperkenalkan endpoint /sleep yang membuat thread tidur selama 10 detik sebelum merespons. Ini mensimulasikan blocking behavior pada server, menguji kemampuan server menangani permintaan yang lama.
 
 </details>
